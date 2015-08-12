@@ -2,10 +2,10 @@
 *an aho-corasick string pattern matching algorithm implemented in Scala*
 
 ## Introduction 
-*Aho-Corasick Algorithm implemented in Scala
-*Easy to use
-*Strictly based on the original paper in which the algorithm was first introduced
-[The Original Paper]: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.96.4671&rep=rep1&type=pdf
+* Aho-Corasick Algorithm implemented in Scala
+* Easy to use
+* Strictly based on the original paper in which the algorithm was first introduced
+[The Original Paper: ](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.96.4671&rep=rep1&type=pdf)
 
 ## How to Use
 ```Scala
