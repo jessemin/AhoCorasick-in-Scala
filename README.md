@@ -25,7 +25,7 @@ val matchList = ahoCorasickInstance.processAC(goToTable, outputTable, failTable,
 
 ### Detailed Usages
 
-#### Get Keywords List from File
+#### * Get Keywords List from File
 * Input: <file_name>: String
 * Output: <keywords_list>: List[String]
 
@@ -33,9 +33,9 @@ val matchList = ahoCorasickInstance.processAC(goToTable, outputTable, failTable,
 val keywords = ahoCorasickInstance.generateKeyWords(keywordsFileName)
 ```
 
-#### Get goto function table
-*Input: <keywords_list>: List[String]
-*Output: <tuple_of_goto_and_incomplete_output>: (mutable.Map[(Int, Char), Int],mutable.Map[Int, mutable.Set[String]])
+#### * Get goto function table
+* Input: <keywords_list>: List[String]
+* Output: <tuple_of_goto_and_incomplete_output>: (mutable.Map[(Int, Char), Int],mutable.Map[Int, mutable.Set[String]])
 
 ```Scala
 val ahInstance = new ahoCorasickInstance
@@ -45,9 +45,9 @@ val gotoTable = ahInstance.generateGoToAndOutput(keywordsList)._1
 - Caution: Create ahoCorasickInstance first!
 - Caution: Returned output table is incomplete here. You have to process it one more time. (See the next)
 
-#### Get complete output table and fail table
-*Input: <goto_table>: mutable.Map[(Int, Char), Int], <incomplete_output_table>: mutable.Map[Int, mutable.Set[String]]
-*Output: <complete_output_table>: mutable.Map[Int, mutable.Set[String]], <fail_table>: mutable.Map[Int, Int]
+#### * Get complete output table and fail table
+* Input: <goto_table>: mutable.Map[(Int, Char), Int], <incomplete_output_table>: mutable.Map[Int, mutable.Set[String]]
+* Output: <complete_output_table>: mutable.Map[Int, mutable.Set[String]], <fail_table>: mutable.Map[Int, Int]
 
 ```Scala
 val ahInstance = new ahoCorasickInstance
