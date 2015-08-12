@@ -36,22 +36,26 @@ val keywords = ahoCorasickInstance.generateKeyWords(keywordsFileName)
 ```
 
 #### * Get goto function table
+
+```Scala
 * Input: <keywords_list>: List[String]
 * Output: <tuple_of_goto_and_incomplete_output>: (mutable.Map[(Int, Char), Int],mutable.Map[Int, mutable.Set[String]])
 
-```Scala
+//Code Body
 val ahInstance = new ahoCorasickInstance
 val gotoTable = ahInstance.generateGoToAndOutput(keywordsList)._1
-```
 
-- Caution: Create ahoCorasickInstance first!
-- Caution: Returned output table is incomplete here. You have to process it one more time. (See the next)
+//Cautions
+- Create ahoCorasickInstance first!
+- Returned output table is incomplete here. You have to process it one more time. (See the next)
 
 #### * Get complete output table and fail table
+
+```Scala
 * Input: <goto_table>: mutable.Map[(Int, Char), Int], <incomplete_output_table>: mutable.Map[Int, mutable.Set[String]]
 * Output: <complete_output_table>: mutable.Map[Int, mutable.Set[String]], <fail_table>: mutable.Map[Int, Int]
 
-```Scala
+//Code Body
 val ahInstance = new ahoCorasickInstance
 val intermediateTuple = ahInstance.generateGoToAndOutput(keywordsList)
 val outputAndFailTuple = ahInstance.generateFailAndOutput(intermediateTuple._1, intermediateTuple._2)
