@@ -1,33 +1,37 @@
 package ahoCorasick
+
 /*
  * Implementation of Aho-Corasick Pattern Matching Algorithm in Scala
  */
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+import scala.io.Source
 
 object ahoCorasickInstance {
-  def processAC(inputString: String, keywords: List[String]): List[String] = {
+  def generateKeyWords(fileName: String): List[String] ={
+    val keywordsBuffer = new ListBuffer[String]()
+    Source.fromFile(fileName).getLines.foreach({ line =>
+      keywordsBuffer.append(line)
+    })
+    return keywordsBuffer.toList.toSet.toList
+  }
+  def processAC(goToTable: mutable.Map[(Int, Char), Int], output2: mutable.Map[Int, mutable.Set[String]], fail: mutable.Map[Int, Int],inputString: String): List[String] = {
     val acInstance = new ahoCorasickInstance
-    acInstance.generateGoToAndOutput(keywords)
-    acInstance.generateFailAndOutput
-    val matchList = acInstance.executeAutomata(inputString)
+    val matchList = acInstance.executeAutomata(goToTable, output2,fail,inputString)
     return matchList
   }
 }
 
 class ahoCorasickInstance {
+
   var newState = 0
-  val goToTable = mutable.Map.empty[(Int, Char), Int]
-  val output = mutable.Map.empty[Int, mutable.Set[String]]
-  val fail = mutable.Map.empty[Int, Int]
   val nodeSet = mutable.Set.empty[Char]
   val nonZeroNodeSet = mutable.Set.empty[Char]
-
-  def enter(keyword: String) = {
+  def enter(goToTable: mutable.Map[(Int, Char), Int], output: mutable.Map[Int, mutable.Set[String]],keyword: String) = {
     var state = 0
     var j = 0
     val m = keyword.length
-    while (goToTable.getOrElse((state, keyword.charAt(j)), -1) != -1 ){
+    while (j < m && goToTable.getOrElse((state, keyword.charAt(j)), -1) != -1 ){
       state = goToTable.getOrElse((state, keyword.charAt(j)), -1)
       j = j + 1
     }
@@ -40,9 +44,11 @@ class ahoCorasickInstance {
     currentMatchedOutput.add(keyword)
     output.update(state, currentMatchedOutput)
   }
-  def generateGoToAndOutput(inputs: List[String]) = {
-    val numInputs = inputs.length
-    for(i <- 0 until numInputs) enter(inputs.apply(i))
+  def generateGoToAndOutput(keywords: List[String]): (mutable.Map[(Int, Char), Int],mutable.Map[Int, mutable.Set[String]]) = {
+    val goToTable = mutable.Map.empty[(Int, Char), Int]
+    val output = mutable.Map.empty[Int, mutable.Set[String]]
+    val numInputs = keywords.length
+    for(i <- 0 until numInputs) enter(goToTable, output, keywords.apply(i))
     goToTable.keySet.foreach({ key =>
       nodeSet.add(key._2)
     })
@@ -50,9 +56,12 @@ class ahoCorasickInstance {
       if(!goToTable.keySet.contains((0, node))) goToTable.update((0, node), 0)
       else nonZeroNodeSet.add(node)
     })
+    return (goToTable, output)
   }
 
-  def generateFailAndOutput = {
+  def generateFailAndOutput(goToTable: mutable.Map[(Int, Char), Int], output: mutable.Map[Int, mutable.Set[String]]): (mutable.Map[Int, Int],mutable.Map[Int, mutable.Set[String]]) = {
+
+    val fail = mutable.Map.empty[Int, Int]
     val queue = mutable.Queue.empty[Int]
 
     nonZeroNodeSet.foreach({ nonZero =>
@@ -78,8 +87,9 @@ class ahoCorasickInstance {
         if(!res.isEmpty )output.update(s, res)
       })
     }
+    return (fail, output)
   }
-  def executeAutomata(inputString: String): List[String] ={
+  def executeAutomata(goToTable: mutable.Map[(Int, Char), Int], output: mutable.Map[Int, mutable.Set[String]], fail: mutable.Map[Int, Int], inputString: String): List[String] ={
     val results = new ListBuffer[String]()
     var state = 0
     val inputLength = inputString.length
