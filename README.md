@@ -26,10 +26,12 @@ val matchList = ahoCorasickInstance.processAC(goToTable, outputTable, failTable,
 ### Detailed Usages
 
 #### * Get Keywords List from File
+
+```Scala
 * Input: <file_name>: String
 * Output: <keywords_list>: List[String]
 
-```Scala
+//Code Body
 val keywords = ahoCorasickInstance.generateKeyWords(keywordsFileName)
 ```
 
