@@ -48,6 +48,7 @@ val gotoTable = ahInstance.generateGoToAndOutput(keywordsList)._1
 //Cautions
 - Create ahoCorasickInstance first!
 - Returned output table is incomplete here. You have to process it one more time. (See the next)
+```
 
 #### * Get complete output table and fail table
 
