@@ -29,7 +29,7 @@ val matchList = ahoCorasickInstance.processAC(goToTable, outputTable, failTable,
 
 ```Scala
 * Inputs: 1) <file_name>: String
-* Output: 2) <keywords_list>: List[String]
+* Output: 2) <keyword_list>: List[String]
 
 //Code Body
 val keywords = ahoCorasickInstance.generateKeyWords(keywordsFileName)
