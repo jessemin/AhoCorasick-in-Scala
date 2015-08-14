@@ -1,5 +1,5 @@
 # Revisiting Aho-Corasick in Scala
-*an aho-corasick pattern matching algorithm in Scala*
+*an aho-corasick String pattern matching algorithm in Scala*
 
 ## Introduction 
 * Scala implementation of Aho-Corasick Algorithm
