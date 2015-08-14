@@ -1,8 +1,8 @@
 # Revisiting Aho-Corasick in Scala
-*an aho-corasick string pattern matching algorithm implemented in Scala*
+*an aho-corasick pattern matching algorithm in Scala*
 
 ## Introduction 
-* Aho-Corasick Algorithm implemented in Scala
+* Scala implementation of Aho-Corasick Algorithm
 * Easy to use
 * Strictly based on the original paper in which the algorithm was first introduced
 
@@ -28,8 +28,8 @@ val matchList = ahoCorasickInstance.processAC(goToTable, outputTable, failTable,
 #### - Get Keywords List from File
 
 ```Scala
-* Input: <file_name>: String
-* Output: <keywords_list>: List[String]
+* Inputs: 1) <file_name>: String
+* Output: 2) <keywords_list>: List[String]
 
 //Code Body
 val keywords = ahoCorasickInstance.generateKeyWords(keywordsFileName)
@@ -38,8 +38,8 @@ val keywords = ahoCorasickInstance.generateKeyWords(keywordsFileName)
 #### - Get goto function table
 
 ```Scala
-* Input: <keywords_list>: List[String]
-* Output: <tuple_of_goto_and_incomplete_output>: (mutable.Map[(Int, Char), Int],mutable.Map[Int, mutable.Set[String]])
+* Inputs: 1) <keywords_list>: List[String]
+* Output: 1) <tuple_of_goto_and_incomplete_output>: (mutable.Map[(Int, Char), Int],mutable.Map[Int, mutable.Set[String]])
 
 //Code Body
 val ahInstance = new ahoCorasickInstance
@@ -53,13 +53,15 @@ val gotoTable = ahInstance.generateGoToAndOutput(keywordsList)._1
 #### - Get complete output table and fail table
 
 ```Scala
-* Input: <goto_table>: mutable.Map[(Int, Char), Int], <incomplete_output_table>: mutable.Map[Int, mutable.Set[String]]
-* Output: <complete_output_table>: mutable.Map[Int, mutable.Set[String]], <fail_table>: mutable.Map[Int, Int]
+* Inputs: 1) <goto_table>: mutable.Map[(Int, Char), Int], 
+          2) <incomplete_output_table>: mutable.Map[Int, mutable.Set[String]]
+* Output: 1) <complete_output_table>: mutable.Map[Int, mutable.Set[String]]
+          2) <fail_table>: mutable.Map[Int, Int]
 
 //Code Body
 val ahInstance = new ahoCorasickInstance
-val intermediateTuple = ahInstance.generateGoToAndOutput(keywordsList)
-val outputAndFailTuple = ahInstance.generateFailAndOutput(intermediateTuple._1, intermediateTuple._2)
+val notYetTuple = ahInstance.generateGoToAndOutput(keywordsList)
+val outputAndFailTuple = ahInstance.generateFailAndOutput(notYet._1, notYet._2)
 val outputTable = outputAndFailTuple._1
 val failTable = outputAndFailTuple._2
 ```
